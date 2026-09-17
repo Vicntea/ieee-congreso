@@ -1,13 +1,13 @@
 \section{VALIDACIÓN EXPERIMENTAL}
 
-Con el objetivo de validar la propuesta presentada, se diseñó una evaluación que consideró tanto el desempeño del modelo de aprendizaje adaptativo como la percepción de los usuarios respecto de la plataforma \textbf{SheetMusic}. La validación se estructuró en tres etapas: (i) definición del escenario experimental, (ii) evaluación mediante métricas objetivas y subjetivas, y (iii) análisis de los resultados obtenidos.
+Con el objetivo de validar la propuesta presentada, se diseñó una evaluación que consideró tanto el desempeño del modelo de aprendizaje adaptativo como la percepción de los usuarios respecto de la plataforma \textbf{SheetMusic}, estructurada en la definición del escenario experimental, la evaluación mediante métricas objetivas y subjetivas, y el análisis de los resultados obtenidos.
 
 %--------------------------------------------------------
 \subsection{Diseño Experimental}
 
-La validación se realizó utilizando la versión funcional de \textbf{SheetMusic} desarrollada durante el proyecto. Los participantes interactuaron con la plataforma resolviendo actividades de teoría musical recomendadas por el agente basado en \textit{Deep Reinforcement Learning}. Durante cada sesión se registró automáticamente el estado del estudiante, las recomendaciones realizadas por el sistema y el progreso alcanzado en las distintas unidades de conocimiento.
+La validación se realizó utilizando la versión funcional de \textbf{SheetMusic} desarrollada durante el proyecto, en la cual los participantes resolvieron actividades de teoría musical recomendadas por el agente basado en \textit{Deep Reinforcement Learning}. Durante cada sesión se registró automáticamente el estado del estudiante, las recomendaciones del sistema y el progreso alcanzado en las distintas unidades de conocimiento.
 
-Finalizada la interacción, estudiantes y docentes respondieron instrumentos estandarizados con el propósito de evaluar la usabilidad y aceptación de la plataforma.
+El diseño correspondió a un estudio piloto de un solo grupo, con mediciones repetidas de \textit{proficiency} a lo largo del período de uso, sin grupo control ni línea base externa de comparación. Por este motivo, la evaluación no incorporó pruebas de significancia estadística y los resultados se interpretan como evidencia preliminar de factibilidad. Finalizada la interacción, estudiantes y docentes respondieron instrumentos estandarizados con el propósito de evaluar la usabilidad y aceptación de la plataforma.
 
 %--------------------------------------------------------
 \subsection{Métricas de Evaluación}
@@ -18,11 +18,11 @@ La validación experimental consideró dos dimensiones complementarias: (i) el d
 
 \begin{itemize}
 
-\item \textbf{Progreso de Aprendizaje (Proficiency):} cuantifica el incremento del nivel de dominio alcanzado por el estudiante durante las sesiones de aprendizaje, permitiendo evaluar la efectividad pedagógica de las recomendaciones generadas por el agente.
+\item \textbf{Progreso de Aprendizaje (Proficiency):} cuantifica la evolución del nivel de dominio alcanzado por el estudiante durante las sesiones de aprendizaje, permitiendo caracterizar el desempeño observado del agente.
 
-\item \textbf{Tasa de Continuidad:} mide la permanencia del estudiante en el proceso de aprendizaje mediante el número de sesiones realizadas y la continuidad de uso de la plataforma, proporcionando una estimación indirecta del nivel de compromiso generado por el sistema adaptativo.
+\item \textbf{Tasa de Continuidad:} mide la permanencia del estudiante en el proceso de aprendizaje mediante el número de sesiones realizadas y la continuidad de uso de la plataforma, como estimación indirecta del nivel de compromiso con el sistema.
 
-\item \textbf{Adaptabilidad de la Dificultad:} evalúa la capacidad del agente para recomendar ejercicios cuya dificultad se mantenga cercana al nivel de competencia del estudiante, evitando tanto la frustración por actividades excesivamente complejas como la pérdida de interés por ejercicios demasiado simples.
+\item \textbf{Adaptabilidad de la Dificultad:} evalúa la capacidad del agente para recomendar ejercicios cuya dificultad se mantenga cercana al nivel de competencia del estudiante, evitando actividades excesivamente complejas o demasiado simples.
 
 \end{itemize}
 
@@ -39,33 +39,30 @@ La validación experimental consideró dos dimensiones complementarias: (i) el d
 %--------------------------------------------------------
 \section{RESULTADOS}
 
-%--------------------------------------------------------
-\subsection{Resultados}
-
-La validación experimental se realizó mediante una prueba piloto con 28 estudiantes de la Región de Los Ríos, Chile, compuesta por 5 estudiantes del Conservatorio de Música de la Universidad Austral de Chile y 23 estudiantes de enseñanza media de la comuna de Corral. Durante un período de 28 días consecutivos, los participantes utilizaron la plataforma \textbf{SheetMusic} para resolver actividades de teoría musical recomendadas por el agente basado en \textit{Deep Reinforcement Learning}, registrándose automáticamente las métricas de interacción, progreso y rendimiento utilizadas en la evaluación.
+La validación se realizó mediante una prueba piloto con 28 estudiantes de la Región de Los Ríos, Chile: 5 del Conservatorio de Música de la Universidad Austral de Chile y 23 de enseñanza media de la comuna de Corral. Durante 28 días consecutivos, los participantes utilizaron \textbf{SheetMusic} para resolver actividades de teoría musical recomendadas por el agente basado en \textit{Deep Reinforcement Learning}, registrándose automáticamente las métricas de interacción, progreso y rendimiento.
 
 %--------------------------------------------------------
-\subsubsection{Resultados del Modelo de Recomendación}
+\subsection{Resultados del Modelo de Recomendación}
 
-La Figura~\ref{fig:rendimiento_ieee} presenta la evolución del nivel de \textit{proficiency} para tres perfiles representativos de estudiantes: alto, medio y bajo desempeño. En los tres casos se observa una tendencia ascendente, indicando que el agente fue capaz de adaptar progresivamente las recomendaciones al nivel de conocimiento de cada estudiante. Incluso los participantes con menor dominio inicial evidenciaron una mejora sostenida durante el período de evaluación, lo que sugiere que la política aprendida mediante PPO logra personalizar adecuadamente las trayectorias de aprendizaje.
+La Figura~\ref{fig:rendimiento_ieee} presenta la evolución del nivel de \textit{proficiency} observada en tres perfiles representativos de estudiantes. En los tres casos se aprecia una tendencia ascendente, lo que resulta consistente con el funcionamiento esperado de la política aprendida mediante PPO. Sin embargo, al no disponer de un grupo control ni de una línea base externa, no es posible atribuir el incremento observado de forma específica al componente DRL, ya que otras variables del proceso de aprendizaje podrían haber contribuido a la mejora.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.48\textwidth]{Imagenes/rendimiento_estudiantes.png}
-    \caption{Evolución del nivel de \textit{proficiency} de tres perfiles representativos de estudiantes durante la validación experimental.}
+    \includegraphics[width=0.40\textwidth]{Imagenes/rendimiento_estudiantes.png}
+    \caption{Evolución del nivel de \textit{proficiency} de tres perfiles representativos de estudiantes durante el piloto.}
     \label{fig:rendimiento_ieee}
 \end{figure}
 
-La continuidad de uso fue evaluada mediante el número de sesiones registradas durante el período experimental. Como se observa en la Figura~\ref{fig:actividad_ieee}, la actividad se mantuvo estable durante las tres primeras semanas de evaluación, acumulando un total de 572 sesiones. La disminución observada durante la cuarta semana corresponde al cierre del proceso de recolección de datos y no a una disminución en el uso de la plataforma.
+La continuidad de uso se evaluó mediante el número de sesiones registradas. Como se observa en la Figura~\ref{fig:actividad_ieee}, la actividad se mantuvo estable durante las tres primeras semanas, acumulando 572 sesiones; la menor actividad registrada en la cuarta semana corresponde al cierre del proceso de recolección de datos y no a una disminución en el uso de la plataforma.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.48\textwidth]{Imagenes/actividad_semanal.png}
+    \includegraphics[width=0.40\textwidth]{Imagenes/actividad_semanal.png}
     \caption{Distribución semanal de las sesiones registradas durante el período de validación.}
     \label{fig:actividad_ieee}
 \end{figure}
 
-Los principales indicadores obtenidos durante la validación se resumen en la Tabla~\ref{tab:resultados_ieee}. En particular, la mediana del nivel de \textit{proficiency} presentó una mejora aproximada del 20\%, superando la meta inicial del 15\%. Asimismo, el sistema ajustó dinámicamente la dificultad y la secuencia de ejercicios de acuerdo con el desempeño individual de cada estudiante, evidenciando la capacidad del agente DRL para personalizar el proceso de aprendizaje.
+Los principales indicadores obtenidos durante el piloto se resumen en la Tabla~\ref{tab:resultados_ieee}. La mediana del nivel de \textit{proficiency} mostró una mejora aproximada del 20\% al comparar las dos primeras semanas de uso con las semanas posteriores, superando la meta inicial del 15\%. Este resultado constituye una observación descriptiva del piloto y no una estimación de efecto.
 
 \begin{table}[htbp]
 \centering
@@ -78,18 +75,18 @@ Los principales indicadores obtenidos durante la validación se resumen en la Ta
 Participantes & 28 estudiantes \\
 Sesiones registradas & 572 sesiones \\
 Continuidad de uso & Actividad sostenida durante el período de evaluación \\
-Mejora en \textit{Proficiency} & Incremento aproximado del 20\% (meta: 15\%) \\
-Adaptabilidad & Ajuste dinámico de la dificultad y secuencia de ejercicios según el desempeño del estudiante \\
+Mejora observada en \textit{Proficiency} & Incremento aproximado del 20\% (meta: 15\%) \\
+Alcance de la evidencia & Estudio piloto de un solo grupo, sin grupo control ni pruebas de significancia \\
 \hline
 \end{tabular}
 \end{table}
 
-En conjunto, estos resultados indican que el agente basado en \textit{Deep Reinforcement Learning} fue capaz de mantener una progresión positiva del aprendizaje, adaptar las recomendaciones al desempeño individual de los estudiantes y sostener una participación continua durante el período de evaluación.
+En conjunto, los resultados observados son compatibles con una progresión positiva del aprendizaje y con una participación sostenida durante el piloto; no obstante, el diseño empleado no permite aislar la contribución del componente DRL de otros factores del proceso de aprendizaje.
 
 %--------------------------------------------------------
-\subsubsection{Resultados de la Plataforma}
+\subsection{Resultados de la Plataforma}
 
-La plataforma \textbf{SheetMusic} fue evaluada desde la perspectiva de la experiencia de usuario utilizando los instrumentos \textit{System Usability Scale} (SUS) y \textit{Technology Acceptance Model} (TAM). Los resultados obtenidos se resumen en la Tabla~\ref{tab:sus_tam}.
+La experiencia de uso de \textbf{SheetMusic} se evaluó mediante los instrumentos \textit{System Usability Scale} (SUS) y \textit{Technology Acceptance Model} (TAM), cuyos resultados se resumen en la Tabla~\ref{tab:sus_tam}.
 
 \begin{table}[htbp]
 \centering
@@ -105,4 +102,23 @@ Future Use Perception (FUP) & 4.00 / 5.00 \\
 \end{tabular}
 \end{table}
 
-El puntaje obtenido en SUS indica una percepción positiva respecto de la facilidad de uso de la plataforma, mientras que la evaluación de Future Use Perception evidencia una favorable disposición de los participantes a continuar utilizando la herramienta en futuros procesos de enseñanza y aprendizaje. En conjunto, estos resultados complementan la evaluación técnica del modelo de recomendación, mostrando que la propuesta no sólo adapta el proceso de aprendizaje, sino que además presenta un nivel de usabilidad y aceptación adecuado para su utilización en contextos educativos.
+El puntaje obtenido en SUS indica una percepción positiva respecto de la facilidad de uso de la plataforma, mientras que la evaluación de Future Use Perception evidencia una favorable disposición de los participantes a continuar utilizando la herramienta. En conjunto, estos resultados complementan la evaluación del modelo de recomendación, mostrando que la propuesta presenta niveles adecuados de usabilidad y aceptación para su utilización en contextos educativos.
+
+%--------------------------------------------------------
+\subsection{Limitaciones y Validez de los Resultados}
+
+Los hallazgos presentados deben interpretarse considerando las siguientes limitaciones:
+
+\begin{itemize}
+\item \textbf{Muestra reducida y heterogénea:} la evaluación consideró 28 estudiantes (5 de Conservatorio y 23 de enseñanza media), sin caracterización de sus conocimientos previos, lo que restringe la representatividad de los resultados.
+\item \textbf{Período acotado:} la observación se extendió por 28 días, plazo que no permite analizar la retención de los aprendizajes ni la sostenibilidad del uso en el tiempo.
+\item \textbf{Cobertura parcial del dominio:} la validación utilizó un subgrafo de cuatro unidades de conocimiento de un total de 23, por lo que el comportamiento del agente en el resto del grafo no fue evaluado.
+\item \textbf{Ausencia de grupo control y de línea base:} el diseño correspondió a un estudio de un solo grupo, sin condiciones de comparación ni pruebas de significancia estadística, lo que impide atribuir causalmente la mejora observada al componente DRL.
+\item \textbf{Entrenamiento principalmente simulado:} la política del agente se entrenó con interacciones generadas por el simulador \texttt{SyntheticStudent}, por lo que su desempeño en condiciones reales de aula podría diferir del reportado.
+\item \textbf{Aspectos éticos:} la evaluación se realizó sin aprobación previa de un Comité de Ética ni formulario formal de consentimiento, según se detalla a continuación.
+\end{itemize}
+
+%--------------------------------------------------------
+\subsection{Consideraciones Éticas}
+
+La evaluación piloto se realizó con estudiantes de enseñanza media. Previamente, el docente responsable notificó a los apoderados por correo electrónico y obtuvo su autorización para la participación de los menores. Los estudiantes accedieron voluntariamente a la plataforma mediante un enlace proporcionado por el profesor; la participación no fue obligatoria ni estuvo asociada a consecuencias académicas. En la aplicación se desplegó un aviso de privacidad que indicaba: ``los datos recopilados de las sesiones de usuarios son anonimizados y serán utilizados en un estudio científico-tecnológico. Además, en caso de ser menor de edad cuenta con la autorización de sus padres'', garantizando que, incluso entre los menores, se contaba con el consentimiento de los apoderados. La plataforma no solicitó nombre, RUT, edad u otros datos personales directamente identificatorios; el acceso podía realizarse con una dirección de correo no identificatoria y los resultados fueron tratados de forma agregada, sin posibilidad de identificar individualmente a los participantes. La evaluación se realizó sin una aprobación previa de un Comité de Ética ni un formulario formal de consentimiento; esta limitación se incorpora en el manuscrito y los autores han solicitado orientación al comité de ética correspondiente.
