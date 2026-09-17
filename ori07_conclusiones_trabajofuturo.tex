@@ -1,0 +1,9 @@
+\section{Conclusiones y Trabajo Futuro}
+
+El prototipo SheetMusic demuestra que es factible articular una plataforma web progresiva y multiplataforma orientada a la gestión pedagógica con un motor de recomendación inteligente desacoplado basado en Deep Reinforcement Learning. La solución desarrollada ofrece un cliente web robusto, un árbol DAG con visualización reactiva y un esquema seguro mediante procedimientos almacenados remotos (RPC) y URLs pre-firmadas. Los resultados experimentales ($SUS = 82.5/100$ y $FUP = 4.00/5$) validan la usabilidad y la pertinencia pedagógica del sistema en el aula escolar chilena.
+
+Gracias a la arquitectura distribuida adoptada y al desacoplamiento entre las capas de presentación, persistencia y computación inteligente, el sistema posee una alta capacidad de evolución. El uso de esquemas de comunicación semiestructurados (\texttt{JSONB}) permite incorporar nuevos tipos de ejercicios, recursos multimedia o nodos al grafo pedagógico sin requerir modificaciones en la estructura de la base de datos ni en el cliente web. Asimismo, la naturaleza desacoplada del microservicio de inteligencia facilita el reentrenamiento continuo del agente PPO, la calibración de sus funciones de recompensa o la integración de nuevos modelos de recomendación adaptativa de forma transparente para el frontend.
+
+Con el propósito de favorecer la reproducibilidad científica y la colaboración en código abierto, el código fuente de los microservicios, el motor DRL y la plataforma cliente se encuentran disponibles en la organización oficial de GitHub: \url{https://github.com/Sheetmusic-Team}.
+
+Como trabajo futuro se contempla la integración de evaluación instrumental en tiempo real mediante el procesamiento digital de señales (DSP) capturadas por micrófono, la implementación de almacenamiento fuera de línea cifrado con AES-256 para contextos con conectividad limitada y el escalamiento horizontal de la base de datos mediante PgBouncer. 

@@ -1,0 +1,42 @@
+\section{Modelo de Conocimiento, Árbol DAG y Gestión Pedagógica}
+
+\subsection{Estructura Jerárquica del Grafo Dirigido Acíclico (DAG)}
+El dominio de la teoría musical se formalizó mediante un Grafo Dirigido Acíclico (DAG) definido como $G = (V, E)$, donde $V$ representa el conjunto de 23 unidades de conocimiento (nodos) y $E$ corresponde a 29 aristas que codifican dependencias de prerrequisitos pedagógicos estrictos, fundamentado en la teoría de aprendizaje acumulativo de Gagné \cite{gagne_conditions_1985}. 
+
+Los nodos se distribuyen en cinco bandas de dificultad identificadas por color:
+\begin{itemize}
+    \item \textbf{Nivel 1 (Iniciación - Gris):} Notas y Ritmo (1a), Entonación Simple (1b). Recompensa: 50 XP.
+    \item \textbf{Nivel 2 (Fundamentos - Verde):} Intervalos (2a), Escalas (2b), Solfeo a dos voces (2c). Recompensa: 80 XP.
+    \item \textbf{Nivel 3 (Armonía - Azul):} Acordes Tríadas (3a), Progresiones Básicas (3b), Dictado Melódico (3c). Recompensa: 120 XP.
+    \item \textbf{Nivel 4 (Teoría Avanzada - Morado):} Acordes con Séptima (4a), Cadencias (4b), Dictado Armónico (4c). Recompensa: 160 XP.
+    \item \textbf{Nivel 5 (Maestría - Dorado):} Contrapunto (5a), Armonía Cromática (5b), Análisis Complejo (5c). Recompensa: 200 XP.
+\end{itemize}
+
+\subsection{Algoritmo de Cálculo de Estado de Nodos y Modo Foco}
+Para determinar la disponibilidad de un nodo en la interfaz web, el \textit{hook} \texttt{useSkillTreeData} recupera el grafo e invoca un algoritmo de ordenamiento topológico local. Un nodo $v_i \in V$ se clasifica dinámicamente según la regla:
+
+\begin{equation}
+State(v_i) = \begin{cases} 
+\text{locked}, & \exists u \in Pred(v_i) \mid Prog(u) \neq \text{done} \\
+\text{done}, & Prog(v_i) = \text{done} \\
+\text{active}, & Prog(v_i) = \text{in\_progress} \\
+\text{available}, & \text{en otro caso}
+\end{cases}
+\label{eq_state}
+\end{equation}
+
+El lienzo SVG dibuja los nodos mediante un algoritmo de disposición bidimensional por niveles y conecta las dependencias con curvas de Bézier cúbicas. La interfaz soporta un \textbf{Modo de Foco} (\textit{Focus Mode}) que, ejecutando un recorrido en amplitud (BFS) hacia atrás desde un nodo objetivo, aísla y resalta la ruta crítica de aprendizaje atenuando los nodos irrelevantes.
+
+\subsection{Entrega Segura de Video y Motor de Gamificación en BD}
+Para proteger los videos pedagógicos alojados en Supabase Storage, el cliente invoca la RPC \texttt{get\_signed\_url} \cite{aws_presigned_2023, owasp_mobile_2023}. Tras validar que el usuario ha desbloqueado el nodo, se genera una URL pre-firmada con 10 minutos de vigencia. El \textit{hook} \texttt{useVideoUrl} monitorea la expiración y solicita una nueva clave 2 minutos antes del vencimiento sin interrumpir la reproducción en curso.
+
+La lógica de gamificación reside 100\% en la base de datos a través de \textit{triggers} transaccionales \cite{deterding_game_2011, hamari_does_2014}:
+\begin{itemize}
+    \item \texttt{trg\_xp\_leccion\_completada}: Acredita el valor \texttt{xp\_reward} con guardas de idempotencia.
+    \item \texttt{trg\_xp\_cuestionario}: Otorga 80 XP base y un bono de 40 XP si se aprueba en el primer intento.
+    \item \texttt{trg\_racha\_diaria}: Suma bonos de 100, 300 y 1000 XP al alcanzar rachas de 7, 30 y 100 días consecutivos de práctica.
+\end{itemize}
+El nivel del usuario se calcula automáticamente mediante la progresión geométrica $XP_{\min}(n) = 500 \times 2^{n-2}$ para $n \ge 2$.
+
+\subsection{Panel de Gestión y Seguimiento Docente}
+El módulo para el profesorado permite crear cursos, generar códigos alfanuméricos de inscripción y asignar tareas acotadas a un nodo completo o lección individual. A través de la RPC \texttt{get\_metricas\_leccion}, el docente visualiza la tasa de éxito porcentual de cada alumno, la cantidad de intentos fallidos acumulados y gráficos consolidados de actividad diaria del curso junto con las lecciones de mayor dificultad promedio.

@@ -1,0 +1,43 @@
+\section{TRABAJOS RELACIONADOS Y ESTADO DEL ARTE}
+
+El aprendizaje adaptativo de teoría musical constituye un área interdisciplinaria donde convergen la educación musical, la inteligencia artificial y los sistemas inteligentes de apoyo al aprendizaje. En esta sección se revisan las principales plataformas existentes, los avances recientes en representación del conocimiento y aprendizaje adaptativo, y la brecha científica que motiva el presente trabajo.
+
+\subsection{Plataformas de Aprendizaje Musical}
+
+En el ámbito comercial y de acceso abierto destacan plataformas como \textit{Yousician}, \textit{Simply Piano}, \textit{Teoria.com} y \textit{Duolingo Music}. Estas herramientas han contribuido significativamente a masificar el acceso al aprendizaje musical mediante experiencias gamificadas e interfaces interactivas. Sin embargo, presentan diversas limitaciones para su incorporación como herramientas de apoyo en el contexto escolar:
+
+\begin{itemize}
+
+\item \textbf{Alineación curricular e idioma:} La mayoría de estas plataformas fueron desarrolladas para mercados angloparlantes y no se encuentran alineadas con las bases curriculares del sistema educativo chileno ni latinoamericano~\cite{garcia2025,alrowais2025}.
+
+\item \textbf{Apoyo al proceso docente:} Su diseño está orientado principalmente al autoaprendizaje, careciendo de mecanismos que permitan al profesor monitorear el progreso de los estudiantes, identificar brechas de aprendizaje o asignar actividades diferenciadas~\cite{garcia2025,alrowais2025,li2025}.
+
+\item \textbf{Secuencias de aprendizaje rígidas:} Generalmente organizan los contenidos mediante rutas de aprendizaje predefinidas o predominantemente lineales, limitando la personalización del recorrido formativo y la incorporación de representaciones explícitas de las dependencias pedagógicas entre los contenidos~\cite{alrowais2025,li2025}.
+
+\end{itemize}
+
+\subsection{Representación del Conocimiento y Aprendizaje Adaptativo}
+
+La representación explícita del dominio de conocimiento constituye un componente fundamental en los sistemas de aprendizaje adaptativo, ya que permite modelar las relaciones de dependencia entre conceptos, definir prerrequisitos y estructurar trayectorias de aprendizaje coherentes~\cite{manrique2019kg}. En el dominio de la teoría musical, esta representación resulta especialmente relevante debido a la naturaleza progresiva de los contenidos, donde la comprensión de conceptos avanzados depende del dominio previo de conocimientos fundamentales.
+
+Paralelamente, la incorporación de técnicas de Inteligencia Artificial en educación ha experimentado un importante crecimiento durante los últimos años. En el ámbito de la educación musical, diversos trabajos han explorado el uso de IA para la generación automática de contenidos, entrenamiento auditivo y evaluación del desempeño de los estudiantes~\cite{garcia2025}.
+
+Particularmente, el \textit{Deep Reinforcement Learning} (DRL) ha demostrado ser una alternativa efectiva para resolver problemas de decisión secuencial y personalización del aprendizaje, permitiendo aprender políticas de recomendación adaptativas a partir de la interacción con el entorno~\cite{sutton2018reinforcement,mnih2015human}. Entre los algoritmos más utilizados destacan \textit{Deep Q-Network} (DQN) y \textit{Proximal Policy Optimization} (PPO), ampliamente empleados para el aprendizaje de políticas en problemas de decisión secuencial. En educación, estos enfoques han sido utilizados para optimizar trayectorias de aprendizaje considerando el desempeño y la evolución individual de cada estudiante~\cite{alrowais2025,li2025}.
+
+No obstante, en el dominio de la educación musical la mayor parte de las investigaciones se han concentrado en composición asistida por IA, entrenamiento auditivo o herramientas de apoyo institucional. Asimismo, las investigaciones revisadas no consideran simultáneamente una representación explícita del conocimiento disciplinar y un mecanismo de decisión basado en aprendizaje por refuerzo para recomendar trayectorias de aprendizaje adaptativas.
+
+\subsection{Brecha Científica}
+
+Del análisis del estado del arte se observa que las soluciones existentes abordan parcialmente el problema del aprendizaje adaptativo. Mientras las plataformas comerciales proporcionan experiencias de aprendizaje gamificadas, los trabajos de investigación exploran la utilización de técnicas de inteligencia artificial para personalizar el proceso educativo. Sin embargo, no se identifican propuestas que integren simultáneamente:
+
+\begin{enumerate}
+
+\item Una representación explícita del conocimiento de teoría musical que modele las dependencias pedagógicas entre los contenidos.
+
+\item Un modelo basado en \textit{Deep Reinforcement Learning} capaz de recomendar dinámicamente la siguiente actividad de aprendizaje de acuerdo con el progreso del estudiante.
+
+\item Una plataforma que permita implementar dicho modelo en un entorno real, incorporando además herramientas de seguimiento pedagógico para el docente.
+
+\end{enumerate}
+
+Esta brecha evidencia la necesidad de desarrollar modelos computacionales que integren una representación explícita del conocimiento con técnicas de aprendizaje adaptativo, permitiendo recomendar dinámicamente actividades de teoría musical de acuerdo con el progreso individual del estudiante y la estructura pedagógica del dominio.

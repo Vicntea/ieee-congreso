@@ -1,0 +1,28 @@
+\section{Trabajos Relacionados y Estado del Arte}
+
+El desarrollo de entornos digitales para la enseñanza de teoría musical y la recomendación adaptativa de contenidos se sitúa en la intersección entre el e-learning, el diseño instruccional y la inteligencia artificial. A continuación se revisan los enfoques existentes en el mercado y la literatura científica reciente.
+
+\subsection{Plataformas Educativas de Música Existentes}
+En el ámbito comercial y de acceso abierto, destacan soluciones como \textit{Yousician}, \textit{Simply Piano}, \textit{Teoria.com} y \textit{Duolingo Music}. Aunque estas herramientas han masificado el acceso al entrenamiento auditivo e instrumental mediante interfaces atractivas y gamificadas, presentan limitaciones estructurales para su adopción en el aula escolar:
+\begin{itemize}
+    \item \textbf{Alineación curricular e idioma:} Están diseñadas prioritariamente en inglés para mercados angloparlantes y no se alinean con las bases curriculares ni la progresión por ciclos del sistema educativo chileno o latinoamericano.
+    \item \textbf{Gestión y seguimiento docente:} Operan como entornos de autoaprendizaje cerrados dirigidos exclusivamente al consumidor final, careciendo de paneles analíticos que permitan al docente diagnosticar lagunas teóricas o asignar tareas diferenciadas.
+    \item \textbf{Estructura de progreso:} Emplean secuencias de aprendizaje predominantemente lineales o rígidas que no consideran la estructura de prerrequisitos pedagógicos ni se adaptan a la zona de desarrollo proximal del estudiante.
+\end{itemize}
+
+\subsection{Inteligencia Artificial y Aprendizaje por Refuerzo en Educación Musical}
+La aplicación de técnicas de Inteligencia Artificial (IA) en la educación ha experimentado un crecimiento acelerado. En el área de la música, investigaciones recientes han explorado el uso de IA para la generación automática de recursos, el entrenamiento auditivo y la evaluación de ejecución \cite{garcia2025}.
+
+Específicamente, el Aprendizaje por Refuerzo Profundo (\textit{Deep Reinforcement Learning}, DRL) ha demostrado ser una herramienta robusta para modelar procesos de decisión secuencial y optimizar rutas de aprendizaje adaptativas en diversas disciplinas \cite{alrowais2025, li2025}. Algoritmos como \textit{Deep Q-Networks} (DQN) y \textit{Proximal Policy Optimization} (PPO) han sido explorados para recomendar trayectorias educativas considerando la incertidumbre y variabilidad en el rendimiento del estudiante \cite{garcia2025}. 
+
+Sin embargo, la literatura revela que la mayoría de los desarrollos con DRL en música se han centrado en la composición algorítmica o en la gestión institucional. La recomendación adaptativa de ejercicios teóricos orientada a estudiantes escolares guiada por un agente inteligente constituye un campo incipiente.
+
+\subsection{Diferenciación de la Propuesta}
+A partir de la revisión del estado del arte, se identificó la ausencia de un ecosistema que integre simultáneamente:
+\begin{enumerate}
+    \item Un grafo de conocimiento musical con dependencias pedagógicas acíclicas (DAG).
+    \item Un motor de recomendación DRL (PPO) que ajuste dinámicamente la secuencia y dificultad de los ejercicios.
+    \item Un servicio web progresivo con gamificación y herramientas de gestión para que el profesor intervenga en la nivelación del aula.
+\end{enumerate}
+
+La propuesta de \textbf{SheetMusic} aborda este vacío integrando estos tres componentes en un servicio web distribuido \cite{inzulza2026, alves2026}.

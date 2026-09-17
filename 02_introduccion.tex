@@ -1,0 +1,37 @@
+\section{INTRODUCCIÓN}
+
+La formación musical escolar desempeña un rol fundamental en el desarrollo cognitivo, creativo y crítico de los estudiantes. Sin embargo, durante las últimas décadas la enseñanza de la música en Chile ha experimentado una progresiva reducción de su presencia dentro del currículo escolar. Decretos ministeriales como el N.\textsuperscript{o} 2960 y el N.\textsuperscript{o} 628 disminuyen la carga horaria destinada a la asignatura a medida que los estudiantes avanzan en su trayectoria escolar, obligando a compartir horas con Artes Visuales o relegando la música a un plan electivo en los niveles superiores~\cite{mineduc_decreto2960_2012, mineduc_decreto628_2016}.
+
+Esta disminución de la carga horaria ha generado dos problemas relevantes para el proceso de enseñanza-aprendizaje de la teoría musical:
+
+\begin{enumerate}
+\item \textbf{Discontinuidad curricular y heterogeneidad del aprendizaje.} La reducción de horas y la falta de continuidad en los programas provocan que los estudiantes lleguen a cursos superiores con importantes diferencias en sus conocimientos musicales, dificultando el trabajo del docente y el desarrollo de actividades homogéneas dentro del aula~\cite{chandia_educacion_2025}.
+
+\item \textbf{Limitada disponibilidad de herramientas adaptativas para el contexto escolar.} Aunque existen plataformas digitales orientadas al aprendizaje musical, como Yousician o Simply Piano, estas han sido diseñadas principalmente para contextos de autoaprendizaje, presentan escasa alineación con el currículo escolar chileno y utilizan rutas de aprendizaje predominantemente lineales, sin considerar explícitamente las dependencias pedagógicas entre los contenidos ni las necesidades particulares de cada estudiante~\cite{garcia2025, alrowais2025, li2025}.
+\end{enumerate}
+
+Como consecuencia, los docentes deben enfrentar cursos con niveles de conocimiento altamente heterogéneos, mientras que las herramientas tecnológicas disponibles ofrecen una capacidad limitada para adaptar dinámicamente las actividades de aprendizaje según el progreso individual de cada estudiante. Esta situación evidencia la necesidad de modelos computacionales capaces de representar explícitamente la estructura del dominio de conocimiento y utilizar dicha representación para personalizar el proceso de enseñanza.
+
+En este contexto surge la siguiente pregunta de investigación:
+
+\begin{quote}
+\textit{¿Cómo desarrollar un modelo computacional de aprendizaje adaptativo capaz de recomendar dinámicamente actividades de teoría musical de acuerdo con el progreso del estudiante y la estructura pedagógica del dominio?}
+\end{quote}
+
+Se plantea como hipótesis que la integración de una representación explícita del conocimiento pedagógico con un modelo basado en \textit{Deep Reinforcement Learning} (DRL), capaz de aprender políticas de decisión adaptativas a partir de la interacción con el entorno~\cite{sutton2018reinforcement,mnih2015human}, permite generar recomendaciones personalizadas que mejoran el proceso de aprendizaje de teoría musical, ajustando dinámicamente la secuencia de actividades de acuerdo con el progreso individual del estudiante y las dependencias existentes entre los contenidos.
+
+Para validar esta hipótesis se desarrolló \textbf{SheetMusic}, una plataforma para la enseñanza adaptativa de teoría musical que implementa el modelo propuesto mediante la integración de un Grafo de Conocimiento Dirigido Acíclico (DAG), utilizado para representar las relaciones de dependencia entre los contenidos musicales, y un agente basado en \textit{Deep Reinforcement Learning}, encargado de recomendar dinámicamente la siguiente actividad de aprendizaje para cada estudiante. La plataforma incorpora además herramientas de seguimiento pedagógico que permiten al docente monitorear el progreso individual de sus estudiantes.
+
+Las principales contribuciones de este trabajo son las siguientes:
+
+\begin{itemize}
+\item La formalización del dominio de teoría musical mediante un Grafo de Conocimiento Dirigido Acíclico que representa explícitamente las dependencias pedagógicas entre los contenidos.
+
+\item El desarrollo de un modelo de aprendizaje adaptativo basado en \textit{Deep Reinforcement Learning}, capaz de recomendar dinámicamente actividades de acuerdo con el estado de aprendizaje de cada estudiante.
+
+\item La implementación del modelo en la plataforma \textbf{SheetMusic}, integrando el motor inteligente dentro de una arquitectura distribuida orientada al aprendizaje adaptativo.
+
+\item La validación experimental del modelo mediante una prueba piloto realizada con estudiantes y docentes de la Región de Los Ríos, evaluando tanto el desempeño del modelo adaptativo como la percepción de usabilidad y aceptación tecnológica de la plataforma.
+\end{itemize}
+
+El resto del artículo se organiza de la siguiente manera. La Sección II presenta los trabajos relacionados y el estado del arte. La Sección III describe el modelo propuesto y la arquitectura de la plataforma \textbf{SheetMusic}. La Sección IV presenta la validación experimental y los resultados obtenidos. Finalmente, la Sección V expone las conclusiones y las principales líneas de trabajo futuro.

@@ -1,0 +1,65 @@
+\section{Fundamentos del Motor de Deep Reinforcement Learning}
+
+El motor de recomendación basado en Deep Reinforcement Learning (DRL) constituye el núcleo inteligente del sistema de enseñanza musical adaptativa. Su función principal es seleccionar el ejercicio más apropiado para cada estudiante en función de su estado de conocimiento actual, maximizando una función de recompensa que combina el acierto, la dificultad óptima y el tiempo de respuesta. La arquitectura se implementó siguiendo el patrón \textit{agent-environment loop} de Reinforcement Learning, utilizando \textit{Stable-Baselines3} (versión 2.0.1) y \textit{Gymnasium} (versión 1.2.0).
+
+\subsection{Modelado del Conocimiento Musical}
+
+El conocimiento musical fue modelado como un grafo dirigido etiquetado $G = (V, E)$, donde $V$ representa unidades de conocimiento (conceptos musicales) y $E$ representa relaciones de dependencia pedagógica no estrictas (\textit{soft prerequisite graph}). A diferencia de un grafo de prerrequisitos rígido, estas relaciones reflejan una estructura de aprendizaje preferencial donde ciertos conceptos facilitan la adquisición de otros, permitiendo flexibilidad en la progresión. Para acotar el espacio de estados del agente DRL, se implementó un subconjunto de cuatro nodos fundamentales: notas y ritmo, intervalos, escalas mayores y menores, y acordes tríadas. Este modelo fue validado con docentes del Conservatorio de Música de la Universidad Austral de Chile y de la Casona Cultural de Panguipulli.
+
+\subsection{Arquitectura del Entorno de Aprendizaje (MusicLearningEnv)}
+
+El entorno \texttt{MusicLearningEnv} se implementó como subclase de \texttt{gymnasium.Env}, modelando la interacción agente-estudiante donde cada paso corresponde a seleccionar un ejercicio y recibir retroalimentación.
+
+\subsubsection{Espacio de Observaciones}
+
+El estado se representa mediante la clase \texttt{UserState}, que encapsula: \textbf{knowledge} (proficiencia $[0.0, 1.0]$ por nodo), \textbf{accuracy} (precisión histórica), \textbf{attempts} (intentos por nodo), \textbf{streak} (racha de aciertos/fallos), \textbf{last\_exercise\_difficulty} (dificultad escala 1--10), \textbf{time\_since\_last\_practice} (horas desde última práctica) y \textbf{recent\_performance\_trend} (últimos 10 resultados por nodo). Para inferencia, el estado se binariza con umbral 0.5:
+\begin{equation}
+o_i = \begin{cases} 
+1 & \text{si } \text{proficiency}_i \geq 0.5 \\
+0 & \text{en otro caso}
+\end{cases}
+\end{equation}
+resultando en un vector \texttt{MultiBinary(N)} con $N$ nodos activos.
+
+\subsubsection{Espacio de Acciones}
+
+Espacio discreto \texttt{Discrete(N)} donde cada acción es un índice mapeado a un ejercicio mediante \texttt{skill\_mapping}. Esto permite agregar o eliminar nodos sin reentrenar el modelo, y garantiza que toda acción corresponda a un ejercicio válido.
+
+\subsubsection{Función de Recompensa}
+
+Combina múltiples factores para balancear consolidación y exploración:
+\begin{equation}
+\begin{aligned}
+R =\;&
+1.0\,\mathbb{I}(\text{correcto})
++ 0.5\,\mathbb{I}(\text{mejoría}) \\
+&+ 0.5\,\mathbb{I}\!\left(
+    \left| d - d^{*} \right| \leq 1
+\right)
+- 0.3\,\mathbb{I}\!\left(
+    \left| d - d^{*} \right| > 2
+\right) \\
+&+ 0.2\,\mathbb{I}(\text{nodo poco practicado})
++ 0.1\,\mathbb{I}(\text{ejercicio nuevo})
+\end{aligned}
+\end{equation}
+
+Los términos incentivan: (1) acierto, (2) mejora respecto al intento anterior, (3) dificultad en zona de desarrollo proximal ($d^* = \text{proficiency} \times 10$), (4) penalización por dificultad inadecuada, (5) exploración de nodos con $<3$ intentos, y (6) variedad de ejercicios. Adicionalmente, se penaliza con $-1.0$ si no se cumplen prerrequisitos (proficiencia $>0.6$ en nodos previos) y con $-0.5$ la repetición consecutiva del mismo ejercicio.
+
+\subsection{Selección del Algoritmo: DQN vs PPO}
+
+Se evaluaron dos algoritmos. \textbf{DQN} (\textit{value-based}) mostró convergencia rápida inicial ($\approx$120 episodios para recompensa 0.75), pero tendió a políticas conservadoras que evitaban nodos nuevos por sobreestimación de valores Q. \textbf{PPO} (\textit{policy-based}, actor-critic) con arquitectura MLP de dos capas ocultas de 64 unidades, clipping $\epsilon=0.2$ y learning rate $3\times10^{-4}$, mostró convergencia más lenta inicialmente (150--180 episodios) pero desarrolló políticas más estables y balanceadas entre exploración y explotación. Se seleccionó PPO por su estabilidad, manejo de incertidumbre educativa, facilidad de ajuste, políticas estocásticas (evitan patrones predecibles) y despliegue simplificado al no requerir replay buffer.
+
+\subsection{Generación de Experiencias de Entrenamiento Basadas en Encuestas}
+
+Dado que en fases iniciales no se disponía de datos reales de interacción, se diseñó un proceso de generación de experiencias en dos etapas. Primero, se aplicó un cuestionario mediante \textbf{Google Forms} a estudiantes de enseñanza media para estimar distribuciones de comportamiento, niveles de conocimiento inicial y parámetros del modelo de aprendizaje. Segundo, a partir de estos parámetros empíricos, se implementó un simulador probabilístico (\texttt{SyntheticStudent}) que genera trayectorias de entrenamiento realistas.
+
+Se definieron tres perfiles basados en los datos de las encuestas: \textbf{desde\_cero} (proficiencias 0.1--0.35 en nodos básicos), \textbf{parcial} (dominio intermedio 0.5--0.8 en nodos avanzados) y \textbf{avanzado} (dominio alto 0.6--0.9). El modelo \texttt{SyntheticStudent} incluye tasa de aprendizaje individual (factor 0.9--1.4), umbral de frustración, consistencia de habilidad y nodos dominados. La actualización tras cada interacción sigue: en éxito, incremento de proficiencia proporcional a la tasa de aprendizaje (máx. 0.3); en fallo, penalización $0.15 \times (1 - \text{consistencia}) + 0.1 \times (\text{fallos previos} + 1)$.
+
+El entrenamiento se realizó en dos etapas: \textbf{Behavior Cloning} inicial (red fully-connected de 128 unidades, entropía cruzada, Adam con $10^{-3}$, 5 épocas) para establecer una política base, seguido de \textbf{entrenamiento PPO} (10,000 pasos, política MlpPolicy, CPU). El dataset generó aproximadamente 150,000--200,000 pasos de entrenamiento.
+
+\subsection{API de Inferencia y Validación Experimental}
+
+El modelo se expone mediante \texttt{FastAPI} con dos endpoints principales: \texttt{POST /next-exercise} (recibe el estado del estudiante y retorna la recomendación PPO con dificultad adaptativa) y \texttt{POST /session-end} (calcula recompensa de sesión y actualiza proficiencias). El modelo se carga con \textit{lazy loading} thread-safe.
+
+La validación se realizó con 28 estudiantes (5 del Conservatorio de la UACh, 23 de enseñanza media de Corral) durante 28 días. Se analizaron tres perfiles de rendimiento: mejor, promedio y menor estudiante. Los resultados mostraron una mejora mediana del 20\% en \textit{proficiency}, superando el objetivo del 15\%. La actividad se mantuvo sostenida durante las cuatro semanas, confirmando que el motor DRL contribuyó efectivamente al progreso de los estudiantes en teoría musical.
